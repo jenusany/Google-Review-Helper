@@ -28,6 +28,7 @@ if (code) {
       fetch(`https://graph.facebook.com/v16.0/803246971960239?fields=instagram_business_account&access_token=${accessToken}`)
         .then(response => response.json())
         .then(userData => {
+          console.log(userData)
           alert('User Data:', userData);
         });
     })
