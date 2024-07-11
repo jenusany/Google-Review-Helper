@@ -28,11 +28,7 @@ if (code) {
       alert(accessToken);
 
       // Use the access token to fetch user data
-      fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`)
-        .then(response => response.json())
-        .then(userData => {
-          alert('User Data:', userData);
-        });
+      
     })
     .catch(error => console.error('Error:', error));
 }
