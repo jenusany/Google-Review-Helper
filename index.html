@@ -25,10 +25,7 @@ if (code) {
       let accessToken = data["access_token"];
 
       fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`)
-        .then(response => response.json())
-        .then(userData => {
-          console.log(userData);
-        });
+        .then(response => console.log(response))
     })
     .catch(error => console.error('Error:', error));
 }
