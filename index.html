@@ -22,13 +22,11 @@ if (code) {
   fetch(`https://graph.facebook.com/v11.0/oauth/access_token?client_id=803246971960239&redirect_uri=https://jenusany.github.io/Instagram-comment-analysis&client_secret=c19298b4ce75926bf2dc0177b77e5912&code=${code}`)
     .then(response => response.json())
     .then(data => {
-      console.log(data)
       let accessToken = data["access_token"];
-      console.log(accessToken)
-      alert(accessToken);
 
-      // Use the access token to fetch user data
-      
+      fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`)
+        .then(response => console.log(response))
+        
     })
     .catch(error => console.error('Error:', error));
 }
