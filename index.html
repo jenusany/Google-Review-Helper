@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Login</title>
+  <title>Instagram Comment Analysis</title>
 </head>
 <body>
-    <h1>Login with Instagram</h1>
-    <a href="https://www.facebook.com/v13.0/dialog/oauth?client_id=803246971960239&redirect_uri=https://jenusany.github.io/Instagram-comment-analysis&scope=instagram_basic,pages_show_list&response_type=code">
-        Login with Facebook
-    </a>
+  <h1>Login with Facebook</h1>
+  <button id="loginButton">Login with Facebook</button>
+  <script>
+    document.getElementById('loginButton').onclick = function() {
+      const appId = '803246971960239';
+      const redirectUri = 'https://jenusany.github.io/Instagram-comment-analysis';
+      const authUrl = `https://www.facebook.com/v11.0/dialog/oauth?client_id=${appId}&redirect_uri=${redirectUri}&scope=instagram_basic,pages_show_list`;
+    
+      window.location.href = authUrl;
+    };
+    const urlParams = new URLSearchParams(window.location.search);
+const code = urlParams.get('code');
+
+if (code) {
+  // Exchange the code for an access token
+  fetch(`https://graph.facebook.com/v11.0/oauth/access_token?client_id=YOUR_APP_ID&redirect_uri=https://jenusany.github.io/Instagram-comment-analysis&client_secret=YOUR_APP_SECRET&code=${code}`)
+    .then(response => response.json())
+    .then(data => {
+      const accessToken = data.access_token;
+      alert('Access Token:', accessToken);
+
+      // Use the access token to fetch user data
+      fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`)
+        .then(response => response.json())
+        .then(userData => {
+          alert('User Data:', userData);
+        });
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+  </script>
 </body>
 </html>

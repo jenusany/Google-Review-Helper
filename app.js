@@ -1,57 +1,21 @@
-const axios = require('axios');
-const express = require('express');
-const app = express();
-const port = 3000;
+// Extract code from URL
+const urlParams = new URLSearchParams(window.location.search);
+const code = urlParams.get('code');
 
-const appID = '803246971960239';
-const appSecret = 'c19298b4ce75926bf2dc0177b77e5912';
-const redirectURI = 'https://jenusany.github.io/Instagram-comment-analysis/auth';
+if (code) {
+  // Exchange the code for an access token
+  fetch(`https://graph.facebook.com/v11.0/oauth/access_token?client_id=YOUR_APP_ID&redirect_uri=https://jenusany.github.io/Instagram-comment-analysis&client_secret=YOUR_APP_SECRET&code=${code}`)
+    .then(response => response.json())
+    .then(data => {
+      const accessToken = data.access_token;
+      console.log('Access Token:', accessToken);
 
-app.get('/auth', async (req, res) => {
-    console.log("log")
-    const { code } = req.query;
-    try {
-        // Exchange code for access token
-        const tokenResponse = await axios.get(`https://graph.facebook.com/v13.0/oauth/access_token`, {
-            params: {
-                client_id: appID,
-                redirect_uri: redirectURI,
-                client_secret: appSecret,
-                code: code
-            }
+      // Use the access token to fetch user data
+      fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`)
+        .then(response => response.json())
+        .then(userData => {
+          console.log('User Data:', userData);
         });
-        const accessToken = tokenResponse.data.access_token;
-
-        // Optionally exchange for long-lived token
-        const longLivedTokenResponse = await axios.get(`https://graph.facebook.com/v13.0/oauth/access_token`, {
-            params: {
-                grant_type: 'fb_exchange_token',
-                client_id: appID,
-                client_secret: appSecret,
-                fb_exchange_token: accessToken
-            }
-        });
-        const longLivedAccessToken = longLivedTokenResponse.data.access_token;
-
-        // Get user info from Instagram Graph API
-        const userInfoResponse = await axios.get('https://graph.instagram.com/me', {
-            params: {
-                fields: 'id,username',
-                access_token: longLivedAccessToken
-            }
-        });
-
-        console.log(code)
-
-        // Send user info as response
-        res.json(userInfoResponse.data);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Something went wrong');
-    }
-    alert(code)
-});
-
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+    })
+    .catch(error => console.error('Error:', error));
+}

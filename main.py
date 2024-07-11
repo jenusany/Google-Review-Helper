@@ -32,6 +32,7 @@ Y = pd.get_dummies(data['sentiment']).values
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size = 0.2, random_state = 42)
 loaded_model.evaluate(X_test, Y_test, verbose = 2, batch_size = 32)
 
+
 twt = ['this is bad']
 #vectorizing the tweet by the pre-fitted tokenizer instance
 twt = tokenizer.texts_to_sequences(twt)
