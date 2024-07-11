@@ -25,7 +25,7 @@ if (code) {
       console.log(data)
       let accessToken = data["access_token"];
       console.log(accessToken)
-      alert('Access Token:', data["access_token"]);
+      alert(accessToken);
 
       // Use the access token to fetch user data
       fetch(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`)
