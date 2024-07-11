@@ -5,9 +5,10 @@ const port = 3000;
 
 const appID = '803246971960239';
 const appSecret = 'c19298b4ce75926bf2dc0177b77e5912';
-const redirectURI = 'https://jenusany.github.io/Instagram-comment-analysis/';
+const redirectURI = 'https://jenusany.github.io/Instagram-comment-analysis/auth';
 
 app.get('/auth', async (req, res) => {
+    console.log("log")
     const { code } = req.query;
     try {
         // Exchange code for access token
