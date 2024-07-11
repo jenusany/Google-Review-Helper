@@ -22,10 +22,7 @@ if (code) {
   fetch(`https://graph.facebook.com/v11.0/oauth/access_token?client_id=803246971960239&redirect_uri=https://jenusany.github.io/Instagram-comment-analysis&client_secret=c19298b4ce75926bf2dc0177b77e5912&code=${code}`)
     .then(response => response.json())
     .then(data => {
-      console.log(data)
-      console.log(data["access_token"])
-      console.log(data.acc)
-      let accessToken = data.access_token;
+      let accessToken = data["access_token"];
       alert('Access Token:', accessToken);
 
       // Use the access token to fetch user data
