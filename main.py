@@ -33,13 +33,16 @@ X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size = 0.2, random
 loaded_model.evaluate(X_test, Y_test, verbose = 2, batch_size = 32)
 
 
-twt = ['this is bad']
+list = [["this is bad"], ["this is good"], ["nice"]]
+
+for line in list:
+    
 #vectorizing the tweet by the pre-fitted tokenizer instance
-twt = tokenizer.texts_to_sequences(twt)
+    line = tokenizer.texts_to_sequences(line)
 #padding the tweet to have exactly the same shape as `embedding_2` input
-twt = pad_sequences(twt, maxlen=28, dtype='int32', value=0)
-sentiment = loaded_model.predict(twt,batch_size=1,verbose = 2)[0]
-if(np.argmax(sentiment) == 0):
-    print("negative")
-elif (np.argmax(sentiment) == 1):
-    print("positive")
+    line = pad_sequences(line, maxlen=28, dtype='int32', value=0)
+    sentiment = loaded_model.predict(line,batch_size=1,verbose = 2)[0]
+    if(np.argmax(sentiment) == 0):
+        print("negative")
+    elif (np.argmax(sentiment) == 1):
+        print("positive")
